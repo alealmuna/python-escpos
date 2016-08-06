@@ -34,13 +34,14 @@ class Usb(Escpos):
 
     """
 
-    def __init__(self, idVendor, idProduct, timeout=0, in_ep=0x82, out_ep=0x01, *args, **kwargs):
+    def __init__(self, idVendor, idProduct, timeout=0, in_ep=0x82, out_ep=0x01, connect=True, *args, **kwargs):
         """
         :param idVendor: Vendor ID
         :param idProduct: Product ID
         :param timeout: Is the time limit of the USB operation. Default without timeout.
         :param in_ep: Input end point
         :param out_ep: Output end point
+        :param connect: Wheter or not open connection on init
         """
         Escpos.__init__(self, *args, **kwargs)
         self.idVendor = idVendor
@@ -48,7 +49,8 @@ class Usb(Escpos):
         self.timeout = timeout
         self.in_ep = in_ep
         self.out_ep = out_ep
-        self.open()
+        if connect:
+            self.open()
 
     def open(self):
         """ Search device on USB tree and set it as escpos device """
